@@ -112,8 +112,8 @@ void set_mincount(int fd, int mcount)
         return;
     }
 
-    tty.c_cc[VMIN] = mcount ? 1 : 0;
-    tty.c_cc[VTIME] = 5;        /* half second timer */
+    tty.c_cc[VMIN] = 100;       // get max 100 reads
+    tty.c_cc[VTIME] = 10;       // wait for 10 decisecond
 
     if (tcsetattr(fd, TCSANOW, &tty) < 0)
         printf("Error tcsetattr: %s\n", strerror(errno));
